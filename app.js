@@ -35,31 +35,27 @@ const Participant = mongoose.model('Participant', new mongoose.Schema({
     
     // QR Code
     qrCodeData: { type: String },
-    qrCodeGenerated: { type: Boolean, default: false },
+    qrGeneratedAt: { type: Date },
     
     // Timestamps
     createdAt: { type: Date, default: Date.now },
-    pagnePaidAt: { type: Date },
-    participationPaidAt: { type: Date },
-    validatedAt: { type: Date },
-    
-    // Notifications
-    lastReminderSent: { type: Date },
-    notificationsEnabled: { type: Boolean, default: true }
+    updatedAt: { type: Date, default: Date.now }
 }));
 
 const Payment = mongoose.model('Payment', new mongoose.Schema({
     participantId: { type: mongoose.Schema.Types.ObjectId, ref: 'Participant', required: true },
-    type: { type: String, enum: ['pagne', 'participation'], required: true },
+    type: { type: String, enum: ['pagne', 'participation', 'complet'], required: true },
     amount: { type: Number, required: true },
+    transactionId: { type: String, required: true },
     status: { type: String, enum: ['pending', 'completed', 'failed'], default: 'pending' },
-    transactionId: { type: String, unique: true },
-    airtelMoneyRef: { type: String },
-    createdAt: { type: Date, default: Date.now },
-    completedAt: { type: Date }
+    proofType: { type: String, enum: ['code', 'screenshot'] },
+    proofData: { type: String }, // URL de la capture d'écran ou code transaction
+    submittedAt: { type: Date, default: Date.now },
+    validatedAt: { type: Date },
+    notes: { type: String }
 }));
 
-// Middlewares
+// Configuration Express
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -73,7 +69,7 @@ app.use(session({
     }
 }));
 
-// Configuration du moteur de template
+// Configuration EJS
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -96,6 +92,159 @@ app.get('/inscription', (req, res) => {
         pagnePrice: 7000,
         participationPrice: 15000
     });
+});
+
+// Route pour soumettre l'inscription
+app.post('/inscription', async (req, res) => {
+    try {
+        const { name, phone, whatsapp, selectedPack, paymentOption } = req.body;
+        
+        // Vérifier si le participant existe déjà
+        const existingParticipant = await Participant.findOne({ 
+            $or: [{ phone }, { whatsapp }] 
+        });
+        
+        if (existingParticipant) {
+            return res.json({ 
+                success: false, 
+                error: 'Un participant avec ce numéro de téléphone existe déjà' 
+            });
+        }
+        
+        // Créer le participant
+        const participant = new Participant({
+            name,
+            phone,
+            whatsapp,
+            uniqueId: `AE${Date.now()}`,
+            ticketNumber: `TK${Date.now().toString().slice(-6)}`,
+            pagnePaid: false,
+            participationPaid: false,
+            fullyValidated: false
+        });
+        
+        await participant.save();
+        
+        res.json({ 
+            success: true, 
+            participant: {
+                id: participant._id,
+                name: participant.name,
+                uniqueId: participant.uniqueId
+            }
+        });
+        
+    } catch (error) {
+        console.error('Erreur inscription:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Erreur lors de l\'inscription' 
+        });
+    }
+});
+
+// Route pour soumettre la preuve de paiement
+app.post('/submit-payment', async (req, res) => {
+    try {
+        const { name, phone, whatsapp, amount, type, proofType, transactionCode } = req.body;
+        
+        // Trouver ou créer le participant
+        let participant = await Participant.findOne({ phone });
+        
+        if (!participant) {
+            // Créer le participant s'il n'existe pas
+            participant = new Participant({
+                name,
+                phone,
+                whatsapp,
+                uniqueId: `AE${Date.now()}`,
+                ticketNumber: `TK${Date.now().toString().slice(-6)}`,
+                pagnePaid: false,
+                participationPaid: false,
+                fullyValidated: false
+            });
+        }
+        
+        // Créer l'enregistrement de paiement
+        const payment = new Payment({
+            participantId: participant._id,
+            type,
+            amount,
+            transactionId: transactionCode || `TX${Date.now()}`,
+            status: 'pending',
+            proofType,
+            submittedAt: new Date()
+        });
+        
+        await payment.save();
+        await participant.save();
+        
+        res.json({
+            success: true,
+            message: 'Paiement soumis avec succès',
+            paymentId: payment._id
+        });
+        
+    } catch (error) {
+        console.error('Erreur soumission paiement:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Erreur lors de la soumission du paiement' 
+        });
+    }
+});
+
+// Route pour générer le QR code
+app.post('/api/generate-qr', async (req, res) => {
+    try {
+        const { name, email } = req.body;
+        
+        const participant = await Participant.findOne({ name });
+        if (!participant) {
+            return res.status(404).json({ 
+                success: false, 
+                error: 'Participant non trouvé' 
+            });
+        }
+        
+        // Vérifier que les deux paiements sont validés
+        if (!participant.pagnePaid || !participant.participationPaid) {
+            return res.status(400).json({ 
+                success: false, 
+                error: 'Tous les paiements doivent être validés pour générer le QR code' 
+            });
+        }
+        
+        // Générer le QR code
+        const qrData = {
+            uniqueId: participant.uniqueId,
+            ticketNumber: participant.ticketNumber,
+            name: participant.name,
+            phone: participant.phone,
+            event: 'After Eid 2026',
+            status: 'VALIDÉ'
+        };
+        
+        const qrCode = await QRCode.toDataURL(JSON.stringify(qrData));
+        const invitationUrl = `${process.env.FRONTEND_URL}/invitation/${participant.uniqueId}`;
+        
+        participant.qrCodeData = JSON.stringify(qrData);
+        participant.fullyValidated = true;
+        await participant.save();
+        
+        res.json({
+            success: true,
+            qrCode,
+            invitationUrl
+        });
+        
+    } catch (error) {
+        console.error('Erreur génération QR:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Erreur lors de la génération du QR code' 
+        });
+    }
 });
 
 app.post('/inscription', async (req, res) => {
