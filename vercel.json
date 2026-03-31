@@ -1,33 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "service.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "public/**/*",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/css/(.*)",
-      "dest": "/public/css/$1"
-    },
-    {
-      "src": "/js/(.*)",
-      "dest": "/public/js/$1"
-    },
-    {
-      "src": "/images/(.*)",
-      "dest": "/public/images/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "service.js"
-    }
-  ],
   "env": {
     "NODE_ENV": "production",
     "MONGODB_URI": "@mongodb_uri",
@@ -40,10 +12,5 @@
     "PAGNE_PRICE": "7000",
     "PARTICIPATION_PRICE": "15000",
     "TOTAL_PRICE": "22000"
-  },
-  "functions": {
-    "service.js": {
-      "maxDuration": 30
-    }
   }
 }
