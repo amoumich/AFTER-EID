@@ -2,17 +2,48 @@
   "version": 2,
   "builds": [
     {
-      "src": "service.js",
+      "src": "app.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "public/**/*",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
+      "src": "/css/(.*)",
+      "dest": "/public/css/$1"
+    },
+    {
+      "src": "/js/(.*)",
+      "dest": "/public/js/$1"
+    },
+    {
+      "src": "/images/(.*)",
+      "dest": "/public/images/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "service.js"
+      "dest": "app.js"
     }
   ],
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "MONGODB_URI": "@mongodb_uri",
+    "SESSION_SECRET": "@session_secret",
+    "ADMIN_PASSWORD": "@admin_password",
+    "BASE_URL": "@base_url",
+    "FRONTEND_URL": "@frontend_url",
+    "EVENT_DATE": "@event_date",
+    "PAYMENT_DEADLINE": "@payment_deadline",
+    "PAGNE_PRICE": "7000",
+    "PARTICIPATION_PRICE": "15000",
+    "TOTAL_PRICE": "22000"
+  },
+  "functions": {
+    "app.js": {
+      "maxDuration": 30
+    }
   }
 }

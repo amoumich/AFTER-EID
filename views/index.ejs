@@ -1,18 +1,241 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>AFTER EID</title>
-    <style>
-        body { font-family: Arial; text-align: center; padding: 50px; }
-        h1 { color: #333; }
-        .status { padding: 20px; background: #f0f0f0; border-radius: 5px; }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>After Eid - Événement Premium</title>
+    <meta name="description" content="Événement exclusif After Eid - Une soirée premium pour célébrer en élégance">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/premium.css">
 </head>
 <body>
-    <h1>🎉 AFTER EID</h1>
-    <div class="status">
-        <p>✅ Serveur est EN LIGNE!</p>
-        <p>Heure: <%= new Date().toLocaleString() %></p>
+    <!-- Header Premium -->
+    <header class="header-premium">
+        <div class="container">
+            <div class="logo">
+                <h1>After <span>Eid</span></h1>
+                <div class="subtitle">Événement Premium</div>
+            </div>
+            <nav class="nav-mobile">
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section Premium -->
+    <section class="hero-premium">
+        <div class="hero-bg">
+            <div class="particles"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="event-date">
+                    <div class="date-badge">Dimanche 31 Mai 2026 - 15h</div>
+                </div>
+                <h2 class="hero-title">
+                    Une Soirée<br>
+                    <span class="gold-text">D'Exception</span>
+                </h2>
+                <p class="hero-description">
+                    Vivez une expérience unique au cœur de l'élégance et du raffinement<br>
+                    <span class="gold-accent">• Soirée Exclusive • Ambiance Premium • Moment Inoubliable •</span>
+                </p>
+                
+                <!-- Compte à rebours principal -->
+                <div class="countdown-premium" id="eventCountdown">
+                    <div class="countdown-title">L'événement commence dans</div>
+                    <div class="countdown-grid">
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="eventDays">00</div>
+                            <div class="countdown-label">Jours</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="eventHours">00</div>
+                            <div class="countdown-label">Heures</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="eventMinutes">00</div>
+                            <div class="countdown-label">Minutes</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="eventSeconds">00</div>
+                            <div class="countdown-label">Secondes</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-cta">
+                    <a href="/inscription" class="btn-premium btn-gold">
+                        <span>Réserver Ma Place</span>
+                        <div class="btn-shine"></div>
+                    </a>
+                    <div class="price-info">
+                        <div class="price-item">
+                            <span class="price-label">Pagne:</span>
+                            <span class="price-value">7.000 FCFA</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">Participation:</span>
+                            <span class="price-value">15.000 FCFA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Compte à Rebours Paiement -->
+    <section class="payment-countdown-section">
+        <div class="container">
+            <div class="countdown-payment">
+                <div class="countdown-urgent">
+                    <div class="urgent-badge">⚠️ Date Limite</div>
+                    <h4>Dernier jour pour payer</h4>
+                    <div class="countdown-grid payment">
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="paymentDays">00</div>
+                            <div class="countdown-label">Jours</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="paymentHours">00</div>
+                            <div class="countdown-label">Heures</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="paymentMinutes">00</div>
+                            <div class="countdown-label">Minutes</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="paymentSeconds">00</div>
+                            <div class="countdown-label">Secondes</div>
+                        </div>
+                    </div>
+                    <a href="/inscription" class="btn-premium btn-dark">
+                        <span>Payer Maintenant</span>
+                        <div class="btn-shine"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Événement -->
+    <section class="event-info">
+        <div class="container">
+            <div class="section-header">
+                <h3 class="section-title">Première Édition <span class="gold-text">Exclusive</span></h3>
+                <p class="section-subtitle">Soyez parmi les premières à vivre cette expérience unique</p>
+            </div>
+            
+            <div class="event-highlight">
+                <div class="highlight-card">
+                    <div class="highlight-icon">🌟</div>
+                    <h4>Événement Inaugural</h4>
+                    <p>Après Eid marque son lancement avec une soirée d'exception. Une première édition qui restera gravée dans les mémoires.</p>
+                    <div class="highlight-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">✨</span>
+                            <span>Création exclusive</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🎭</span>
+                            <span>Animation premium</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🍾</span>
+                            <span>Cocktail raffiné</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Premium -->
+    <footer class="footer-premium">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>After <span>Eid</span></h3>
+                    <p>L'élégance rencontre l'exception</p>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <p>Email: info@after-eid.com</p>
+                    <p>Téléphone: +226 XX XX XX XX</p>
+                </div>
+                
+                <div class="footer-social">
+                    <h4>Suivez-nous</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📷</a>
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">🐦</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 After Eid. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Menu Mobile -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <a href="/" class="mobile-menu-link">Accueil</a>
+            <a href="/inscription" class="mobile-menu-link">Inscription</a>
+            <a href="/mon-statut" class="mobile-menu-link">Mon Statut</a>
+        </div>
     </div>
+
+    <!-- Scripts -->
+    <script src="/js/premium.js"></script>
+    <script>
+        // Compte à rebours événement
+        function updateEventCountdown() {
+            const eventDate = new Date('2026-05-31T15:00:00');
+            const now = new Date();
+            const diff = eventDate - now;
+            
+            if (diff > 0) {
+                document.getElementById('eventDays').textContent = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                document.getElementById('eventHours').textContent = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                document.getElementById('eventMinutes').textContent = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                document.getElementById('eventSeconds').textContent = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            }
+        }
+        
+        // Compte à rebours paiement
+        function updatePaymentCountdown() {
+            const paymentDate = new Date('<%= paymentDeadline %>');
+            const now = new Date();
+            const diff = paymentDate - now;
+            
+            if (diff > 0) {
+                document.getElementById('paymentDays').textContent = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                document.getElementById('paymentHours').textContent = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                document.getElementById('paymentMinutes').textContent = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                document.getElementById('paymentSeconds').textContent = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            } else {
+                document.querySelector('.payment-countdown-section').style.display = 'none';
+            }
+        }
+        
+        setInterval(() => {
+            updateEventCountdown();
+            updatePaymentCountdown();
+        }, 1000);
+        
+        updateEventCountdown();
+        updatePaymentCountdown();
+    </script>
 </body>
 </html>

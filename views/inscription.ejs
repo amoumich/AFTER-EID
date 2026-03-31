@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - After Eid</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/premium.css">
+    <style>
+        .inscription-page {
+            min-height: 100vh;
+            background: var(--gradient-black);
+            padding: 120px 0 60px;
+        }
+        
+        .inscription-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .inscription-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .inscription-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 15px;
+        }
+        
+        .inscription-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+        
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--gold-primary);
+            transform: scale(1.05);
+        }
+        
+        .pricing-card.featured::before {
+            content: "POPULAIRE";
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--gold-primary);
+            color: var(--black-primary);
+            padding: 5px 40px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            transform: rotate(45deg);
+            text-transform: uppercase;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold-primary);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
+        }
+        
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+        
+        .pricing-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .pricing-title {
+            font-size: 1.5rem;
+            color: var(--gold-primary);
+            margin-bottom: 15px;
+        }
+        
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--white-primary);
+            margin-bottom: 10px;
+        }
+        
+        .pricing-price span {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+        
+        .pricing-description {
+            opacity: 0.8;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .pricing-features li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-features li::before {
+            content: "✓";
+            color: var(--gold-primary);
+            margin-right: 10px;
+            font-weight: 700;
+        }
+        
+        .inscription-form {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            padding: 50px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            position: relative;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--gold-primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            color: var(--white-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--gold-primary);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+        }
+        
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .form-input.error {
+            border-color: var(--error);
+            box-shadow: 0 0 20px rgba(220, 53, 69, 0.2);
+        }
+        
+        .error-message {
+            color: var(--error);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        .form-terms {
+            margin-bottom: 30px;
+        }
+        
+        .form-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .form-checkbox input[type="checkbox"] {
+            margin-top: 5px;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--gold-primary);
+        }
+        
+        .form-checkbox label {
+            flex: 1;
+            opacity: 0.8;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .form-checkbox a {
+            color: var(--gold-primary);
+            text-decoration: none;
+        }
+        
+        .form-checkbox a:hover {
+            text-decoration: underline;
+        }
+        
+        .form-submit {
+            text-align: center;
+        }
+        
+        .btn-submit {
+            background: var(--gradient-gold);
+            color: var(--black-primary);
+            padding: 20px 50px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.4);
+        }
+        
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-submit .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--black-primary);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        .payment-summary {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .summary-title {
+            font-size: 1.3rem;
+            color: var(--gold-primary);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .summary-items {
+            margin-bottom: 20px;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--gold-primary);
+            margin-top: 10px;
+            padding-top: 20px;
+            border-top: 2px solid var(--gold-primary);
+        }
+        
+        .summary-label {
+            opacity: 0.8;
+        }
+        
+        .summary-value {
+            font-weight: 600;
+        }
+        
+        .select-pack-btn {
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid var(--gold-primary);
+            border-radius: 25px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--gold-primary);
+            transition: all 0.3s ease;
+        }
+        
+        .pricing-card:hover .select-pack-btn {
+            background: var(--gold-primary);
+            color: var(--black-primary);
+            transform: translateY(-2px);
+        }
+        
+        /* Modal Styles */
+        .payment-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            position: relative;
+            background: var(--black-primary);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            padding: 0;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 30px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            color: var(--gold-primary);
+            font-size: 1.5rem;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--white-primary);
+            font-size: 2rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            opacity: 1;
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .payment-info {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .payment-amount {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .amount-label {
+            display: block;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+        
+        .amount-value {
+            display: block;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gold-primary);
+        }
+        
+        .payment-details {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: var(--white-primary);
+        }
+        
+        .detail-value {
+            color: var(--gold-primary);
+            font-weight: 700;
+        }
+        
+        .reference-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .reference-text {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-weight: 600;
+            color: var(--gold-primary);
+        }
+        
+        .copy-btn {
+            background: var(--gold-primary);
+            border: none;
+            color: var(--black-primary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-1px);
+        }
+        
+        .payment-steps {
+            margin: 25px 0;
+        }
+        
+        .payment-steps h4 {
+            color: var(--gold-primary);
+            margin-bottom: 15px;
+        }
+        
+        .payment-steps ol {
+            padding-left: 20px;
+        }
+        
+        .payment-steps li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            color: var(--white-primary);
+        }
+        
+        .payment-proof {
+            margin-top: 25px;
+        }
+        
+        .payment-proof h4 {
+            color: var(--gold-primary);
+            margin-bottom: 15px;
+        }
+        
+        .proof-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .proof-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        
+        .proof-option input[type="radio"] {
+            accent-color: var(--gold-primary);
+        }
+        
+        .proof-option label {
+            color: var(--white-primary);
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .proof-input {
+            flex: 1;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            color: var(--white-primary);
+            font-size: 1rem;
+        }
+        
+        .proof-input:focus {
+            outline: none;
+            border-color: var(--gold-primary);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .modal-footer {
+            display: flex;
+            gap: 15px;
+            padding: 25px 30px;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            justify-content: flex-end;
+        }
+        
+        .btn-primary {
+            background: var(--gold-primary);
+            color: var(--black-primary);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--white-primary);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--white-primary);
+        }
+        
+        .payment-status-modal .status-modal {
+            text-align: center;
+            max-width: 400px;
+        }
+        
+        .status-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .status-icon.pending {
+            color: #ffc107;
+        }
+        
+        .status-icon.success {
+            color: #28a745;
+        }
+        
+        .status-modal h3 {
+            margin-bottom: 15px;
+            color: var(--white-primary);
+        }
+        
+        .status-modal p {
+            margin-bottom: 25px;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .inscription-page {
+                padding: 100px 0 40px;
+            }
+            
+            .pricing-cards {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
+            
+            .inscription-form {
+                padding: 30px 20px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .btn-submit {
+                width: 100%;
+                padding: 18px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-premium">
+        <div class="container">
+            <div class="logo">
+                <h1>After <span>Eid</span></h1>
+                <div class="subtitle">Événement Premium</div>
+            </div>
+            <nav class="nav-mobile">
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page d'inscription -->
+    <section class="inscription-page">
+        <div class="inscription-container">
+            <div class="inscription-header">
+                <h1 class="inscription-title">Réservez Votre Place</h1>
+                <p class="inscription-subtitle">Devenez partenaire de l'événement premium de l'année</p>
+            </div>
+
+            <!-- Cartes de prix -->
+            <div class="pricing-cards">
+                <div class="pricing-card" onclick="selectPack('pagne')" style="cursor: pointer;">
+                    <div class="pricing-icon">👗</div>
+                    <h3 class="pricing-title">Pagne Exclusif</h3>
+                    <div class="pricing-price">7.000 <span>FCFA</span></div>
+                    <p class="pricing-description">Un pagne design unique pour l'événement</p>
+                    <ul class="pricing-features">
+                        <li>Motifs uniques et originaux</li>
+                        <li>Confection artisanale locale</li>
+                        <li>Couleurs harmonieuses pour l'unité</li>
+                        <li>Toutes unies avec le même pagne</li>
+                    </ul>
+                    <div class="select-pack-btn">
+                        <span>Choisir ce pack</span>
+                    </div>
+                </div>
+
+                <div class="pricing-card featured" onclick="selectPack('participation')" style="cursor: pointer;">
+                    <div class="pricing-icon">🎭</div>
+                    <h3 class="pricing-title">Participation</h3>
+                    <div class="pricing-price">15.000 <span>FCFA</span></div>
+                    <p class="pricing-description">Accès complet à l'événement</p>
+                    <ul class="pricing-features">
+                        <li>Accès tapis rouge</li>
+                        <li>Buffet garni</li>
+                        <li>Cocktail</li>
+                        <li>Animation premium</li>
+                        <li>Shooting photo</li>
+                        <li>Cadeaux exclusifs</li>
+                    </ul>
+                    <div class="select-pack-btn">
+                        <span>Choisir ce pack</span>
+                    </div>
+                </div>
+
+                <div class="pricing-card" onclick="selectPack('complet')" style="cursor: pointer;">
+                    <div class="pricing-icon">💎</div>
+                    <h3 class="pricing-title">Pack Complet</h3>
+                    <div class="pricing-price">22.000 <span>FCFA</span></div>
+                    <p class="pricing-description">Payer tout en une seule fois</p>
+                    <ul class="pricing-features">
+                        <li>Pagne et participation inclus</li>
+                        <li>Solution tout-en-un pratique</li>
+                        <li>Économie de temps</li>
+                        <li>Validation immédiate</li>
+                    </ul>
+                    <div class="select-pack-btn">
+                        <span>Choisir ce pack</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulaire d'inscription -->
+            <div class="inscription-form">
+                <form id="inscriptionForm" action="/inscription" method="POST">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Nom Complet *</label>
+                            <input type="text" id="name" name="name" class="form-input" placeholder="Votre nom complet" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Téléphone *</label>
+                            <input type="tel" id="phone" name="phone" class="form-input" placeholder="+226 XX XX XX XX" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="whatsapp" class="form-label">Numéro WhatsApp *</label>
+                            <input type="tel" id="whatsapp" name="whatsapp" class="form-input" placeholder="+226 XX XX XX XX" required>
+                        </div>
+                    </div>
+
+                    <!-- Résumé du paiement -->
+                    <div class="payment-summary">
+                        <h3 class="summary-title">Résumé de votre commande</h3>
+                        <div class="summary-items">
+                            <div class="summary-item">
+                                <span class="summary-label">Pagne Exclusif</span>
+                                <span class="summary-value">7.000 FCFA</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Participation VIP</span>
+                                <span class="summary-value">15.000 FCFA</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Total</span>
+                                <span class="summary-value">22.000 FCFA</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Options de paiement -->
+                    <div class="form-group">
+                        <label class="form-label">Option de paiement souhaitée</label>
+                        <div style="display: grid; gap: 15px; margin-top: 15px;">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="radio" name="paymentOption" value="full" checked style="accent-color: var(--gold-primary);">
+                                <span>Payer en une seule fois (22.000 FCFA)</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="radio" name="paymentOption" value="partial" style="accent-color: var(--gold-primary);">
+                                <span>Payer en deux fois (7.000 FCFA + 15.000 FCFA)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Terms -->
+                    <div class="form-terms">
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms">
+                                J'accepte les <a href="#terms">conditions générales</a> et confirme vouloir participer à l'événement After Eid. Je comprends que les paiements sont validés via Airtel Money et que l'invitation n'est active qu'une fois les paiements complétés.
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="form-submit">
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <span>Valider et payer</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Mobile -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <a href="/" class="mobile-menu-link">Accueil</a>
+            <a href="/inscription" class="mobile-menu-link">Inscription</a>
+            <a href="/mon-statut" class="mobile-menu-link">Mon Statut</a>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/premium.js"></script>
+    <script>
+        // Validation personnalisée du formulaire
+        document.getElementById('inscriptionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.innerHTML;
+            
+            // Validation
+            if (!validateForm(this)) {
+                return;
+            }
+            
+            // Validation réussie - ouvrir directement le modal de paiement
+            const paymentOption = document.querySelector('input[name="paymentOption"]:checked').value;
+            
+            if (paymentOption === 'full') {
+                showAirtelMoneyModal(22000, 'complet');
+            } else {
+                // Demander d'abord le paiement du pagne
+                showAirtelMoneyModal(7000, 'pagne');
+            }
+        });
+        
+        // Fonction pour afficher le modal de paiement Airtel Money
+        function showAirtelMoneyModal(amount, type) {
+            const modal = document.createElement('div');
+            modal.className = 'payment-modal';
+            modal.innerHTML = `
+                <div class="modal-overlay" onclick="closePaymentModal()"></div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Paiement Airtel Money</h3>
+                        <button class="modal-close" onclick="closePaymentModal()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="payment-info">
+                            <div class="payment-amount">
+                                <span class="amount-label">Montant à payer</span>
+                                <span class="amount-value">${amount.toLocaleString()} FCFA</span>
+                            </div>
+                            
+                            <div class="payment-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Numéro Airtel Money</span>
+                                    <span class="detail-value">+226 XX XX XX XX</span>
+                                </div>
+                                
+                                <div class="detail-item">
+                                    <span class="detail-label">Référence obligatoire</span>
+                                    <div class="reference-box">
+                                        <span class="reference-text">${document.getElementById('name').value.toUpperCase().replace(/\s+/g, '')}AE31</span>
+                                        <button class="copy-btn" onclick="copyReference(this)">📋 Copier</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="payment-steps">
+                                <h4>Étapes de paiement :</h4>
+                                <ol>
+                                    <li>Allez dans votre application Airtel Money</li>
+                                    <li>Choisissez "Transférer" ou "Envoyer de l'argent"</li>
+                                    <li>Entrez le numéro +226 XX XX XX XX</li>
+                                    <li>Entrez le montant de ${amount.toLocaleString()} FCFA</li>
+                                    <li>Dans la référence, mettez : <strong>${document.getElementById('name').value.toUpperCase().replace(/\s+/g, '')}AE31</strong></li>
+                                    <li>Confirmez le paiement</li>
+                                </ol>
+                            </div>
+                            
+                            <div class="payment-proof">
+                                <h4>Après paiement :</h4>
+                                <div class="proof-options">
+                                    <div class="proof-option">
+                                        <input type="radio" id="transactionCode" name="proofType" value="code" checked>
+                                        <label for="transactionCode">Code de transaction</label>
+                                        <input type="text" id="transactionCodeInput" placeholder="Entrez le code de transaction" class="proof-input">
+                                    </div>
+                                    
+                                    <div class="proof-option">
+                                        <input type="radio" id="screenshot" name="proofType" value="screenshot">
+                                        <label for="screenshot">Capture d'écran</label>
+                                        <input type="file" id="screenshotInput" accept="image/*" class="proof-input">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-secondary" onclick="closePaymentModal()">Annuler</button>
+                        <button class="btn-primary" onclick="submitPaymentProof(${amount}, '${type}')">
+                            Soumettre pour validation
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Fonction pour fermer le modal
+        function closePaymentModal() {
+            const modal = document.querySelector('.payment-modal');
+            if (modal) {
+                modal.remove();
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        // Fonction pour copier la référence
+        function copyReference(button) {
+            const referenceText = button.previousElementSibling.textContent;
+            navigator.clipboard.writeText(referenceText).then(() => {
+                button.textContent = '✅ Copié!';
+                setTimeout(() => {
+                    button.textContent = '📋 Copier';
+                }, 2000);
+            });
+        }
+        
+        // Fonction pour soumettre la preuve de paiement
+        async function submitPaymentProof(amount, type) {
+            const proofType = document.querySelector('input[name="proofType"]:checked').value;
+            let proofData = {};
+            
+            if (proofType === 'code') {
+                const code = document.getElementById('transactionCodeInput').value.trim();
+                if (!code) {
+                    alert('Veuillez entrer le code de transaction');
+                    return;
+                }
+                proofData.transactionCode = code;
+            } else {
+                const file = document.getElementById('screenshotInput').files[0];
+                if (!file) {
+                    alert('Veuillez sélectionner une capture d\'écran');
+                    return;
+                }
+                proofData.screenshot = file;
+            }
+            
+            // Afficher le statut "En attente de validation"
+            const submitBtn = event.target;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '⏳ Soumission en cours...';
+            
+            try {
+                const formData = new FormData();
+                formData.append('name', document.getElementById('name').value);
+                formData.append('phone', document.getElementById('phone').value);
+                formData.append('whatsapp', document.getElementById('whatsapp').value);
+                formData.append('amount', amount);
+                formData.append('type', type);
+                formData.append('proofType', proofType);
+                
+                if (proofType === 'code') {
+                    formData.append('transactionCode', proofData.transactionCode);
+                } else {
+                    formData.append('screenshot', proofData.screenshot);
+                }
+                
+                const response = await fetch('/submit-payment', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    closePaymentModal();
+                    showPaymentStatus('pending', 'Paiement soumis avec succès! Votre paiement est en attente de validation manuelle.');
+                    
+                    // Si c'est le premier paiement (pagne) et qu'on a choisi le paiement partiel
+                    if (type === 'pagne' && document.querySelector('input[name="paymentOption"]:checked').value === 'partial') {
+                        // Proposer de payer la participation
+                        setTimeout(() => {
+                            if (confirm('Paiement du pagne soumis! Voulez-vous maintenant payer la participation (15.000 FCFA)?')) {
+                                showAirtelMoneyModal(15000, 'participation');
+                            }
+                        }, 2000);
+                    }
+                } else {
+                    alert('Erreur: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Erreur soumission paiement:', error);
+                alert('Une erreur est survenue. Veuillez réessayer.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Soumettre pour validation';
+            }
+        }
+        
+        // Fonction pour afficher le statut du paiement
+        function showPaymentStatus(status, message) {
+            const statusDiv = document.createElement('div');
+            statusDiv.className = 'payment-status-modal';
+            statusDiv.innerHTML = `
+                <div class="modal-overlay" onclick="this.parentElement.remove()"></div>
+                <div class="modal-content status-modal">
+                    <div class="status-icon ${status}">
+                        ${status === 'pending' ? '⏳' : '✅'}
+                    </div>
+                    <h3>${status === 'pending' ? 'Paiement en attente' : 'Paiement validé'}</h3>
+                    <p>${message}</p>
+                    <button class="btn-primary" onclick="this.parentElement.parentElement.remove()">
+                        OK
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(statusDiv);
+        }
+            
+            // Afficher le chargement
+            submitBtn.innerHTML = '<span class="loading"></span> Traitement en cours...';
+            submitBtn.disabled = true;
+            
+            try {
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData.entries());
+                
+                const response = await fetch('/inscription', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Rediriger vers la page de statut
+                    window.location.href = `/mon-statut/${result.participantId}`;
+                } else {
+                    showErrorMessage(this, result.error);
+                }
+            } catch (error) {
+                console.error('Erreur inscription:', error);
+                showErrorMessage(this, 'Une erreur est survenue. Veuillez réessayer.');
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+        
+        // Fonction de validation du formulaire
+        function validateForm(form) {
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const whatsapp = document.getElementById('whatsapp').value.trim();
+            const terms = document.getElementById('terms').checked;
+            
+            if (!name) {
+                showErrorMessage(form, 'Veuillez entrer votre nom complet');
+                return false;
+            }
+            
+            if (!phone) {
+                showErrorMessage(form, 'Veuillez entrer votre numéro de téléphone');
+                return false;
+            }
+            
+            if (!whatsapp) {
+                showErrorMessage(form, 'Veuillez entrer votre numéro WhatsApp');
+                return false;
+            }
+            
+            if (!terms) {
+                showErrorMessage(form, 'Veuillez accepter les conditions générales');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Fonction pour afficher un message d'erreur
+        function showErrorMessage(form, message) {
+            // Supprimer les messages d'erreur existants
+            const existingError = form.querySelector('.error-message');
+            if (existingError) {
+                existingError.remove();
+            }
+            
+            // Créer et afficher le nouveau message d'erreur
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = message;
+            errorDiv.style.cssText = 'background: rgba(220, 53, 69, 0.1); color: var(--error); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid var(--error);';
+            
+            form.insertBefore(errorDiv, form.firstChild);
+            
+            // Faire défiler vers le message d'erreur
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // Supprimer le message après 5 secondes
+            setTimeout(() => {
+                if (errorDiv.parentNode) {
+                    errorDiv.remove();
+                }
+            }, 5000);
+        }
+        
+        // Sélection de pack
+        function selectPack(packType) {
+            // Mettre à jour le formulaire selon le pack
+            const paymentRadios = document.querySelectorAll('input[name="paymentOption"]');
+            const summaryItems = document.querySelector('.summary-items');
+            
+            // Réinitialiser les styles
+            document.querySelectorAll('.pricing-card').forEach(card => {
+                card.style.border = '';
+            });
+            
+            // Mettre en évidence le pack sélectionné
+            event.currentTarget.style.border = '3px solid var(--gold-primary)';
+            
+            // Mettre à jour le résumé et les options de paiement
+            switch(packType) {
+                case 'pagne':
+                    paymentRadios[1].checked = true; // Paiement partiel
+                    summaryItems.innerHTML = `
+                        <div class="summary-item">
+                            <span class="summary-label">Pagne Exclusif</span>
+                            <span class="summary-value">7.000 FCFA</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Premier paiement</span>
+                            <span class="summary-value">7.000 FCFA</span>
+                        </div>
+                    `;
+                    updatePaymentSummary('partial');
+                    break;
+                    
+                case 'participation':
+                    paymentRadios[1].checked = true; // Paiement partiel
+                    summaryItems.innerHTML = `
+                        <div class="summary-item">
+                            <span class="summary-label">Participation</span>
+                            <span class="summary-value">15.000 FCFA</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Premier paiement</span>
+                            <span class="summary-value">15.000 FCFA</span>
+                        </div>
+                    `;
+                    updatePaymentSummary('partial');
+                    break;
+                    
+                case 'complet':
+                    paymentRadios[0].checked = true; // Paiement complet
+                    summaryItems.innerHTML = `
+                        <div class="summary-item">
+                            <span class="summary-label">Pagne Exclusif</span>
+                            <span class="summary-value">7.000 FCFA</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Participation</span>
+                            <span class="summary-value">15.000 FCFA</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Total</span>
+                            <span class="summary-value">22.000 FCFA</span>
+                        </div>
+                    `;
+                    updatePaymentSummary('full');
+                    break;
+            }
+            
+            // Ajouter un champ caché pour le pack sélectionné
+            let packInput = document.getElementById('selectedPack');
+            if (!packInput) {
+                packInput = document.createElement('input');
+                packInput.type = 'hidden';
+                packInput.id = 'selectedPack';
+                packInput.name = 'selectedPack';
+                document.getElementById('inscriptionForm').appendChild(packInput);
+            }
+            packInput.value = packType;
+            
+            // Faire défiler jusqu'au formulaire
+            document.getElementById('inscriptionForm').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+        
+        function updatePaymentSummary(option) {
+            const summaryItems = document.querySelector('.summary-items');
+            const totalItem = summaryItems.lastElementChild;
+            
+            if (option === 'partial') {
+                totalItem.innerHTML = `
+                    <span class="summary-label">Premier paiement</span>
+                    <span class="summary-value">7.000 FCFA</span>
+                `;
+                
+                // Ajouter une note
+                const note = document.createElement('div');
+                note.style.cssText = 'margin-top: 15px; padding: 15px; background: rgba(255, 215, 0, 0.1); border-radius: 10px; font-size: 0.9rem; opacity: 0.8;';
+                note.innerHTML = '💡 Le solde restant sera à payer avant le 25 mai 2026.';
+                
+                const existingNote = summaryItems.parentNode.querySelector('.payment-note');
+                if (existingNote) existingNote.remove();
+                note.className = 'payment-note';
+                summaryItems.parentNode.appendChild(note);
+            } else {
+                totalItem.innerHTML = `
+                    <span class="summary-label">Total</span>
+                    <span class="summary-value">22.000 FCFA</span>
+                `;
+                
+                // Supprimer la note
+                const note = summaryItems.parentNode.querySelector('.payment-note');
+                if (note) note.remove();
+            }
+        }
+        
+        // Validation téléphone Burkina
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            
+            // Format pour le Burkina Faso
+            if (value.startsWith('226')) {
+                value = '+226 ' + value.slice(3).match(/.{1,2}/g)?.join(' ') || '';
+            } else if (value.length > 8) {
+                value = '+226 ' + value.slice(-8).match(/.{1,2}/g)?.join(' ') || '';
+            }
+            
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>
