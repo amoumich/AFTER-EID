@@ -79,11 +79,22 @@ const PAYMENT_DEADLINE = new Date('2026-05-25T23:59:59'); // Lundi 25 mai 2026 2
 
 // Routes principales
 app.get('/', (req, res) => {
-    res.render('index', { 
-        title: 'After Eid - Événement Premium',
-        eventDate: EVENT_DATE,
-        paymentDeadline: PAYMENT_DEADLINE
-    });
+    try {
+        console.log('Route / appelée - Tentative de render index.ejs');
+        res.render('index', { 
+            title: 'After Eid - Événement Premium',
+            eventDate: EVENT_DATE,
+            paymentDeadline: PAYMENT_DEADLINE
+        });
+    } catch (error) {
+        console.error('Erreur render index:', error);
+        res.status(500).send(`
+            <h1>Erreur de rendu</h1>
+            <p>Le template index.ejs ne peut pas être rendu</p>
+            <p>Erreur: ${error.message}</p>
+            <a href="/api/status">Voir le statut API</a>
+        `);
+    }
 });
 
 app.get('/inscription', (req, res) => {
@@ -279,6 +290,17 @@ app.get('/api/status', (req, res) => {
         eventDate: EVENT_DATE,
         paymentDeadline: PAYMENT_DEADLINE
     });
+});
+
+// Route de fallback pour les erreurs
+app.use((err, req, res, next) => {
+    console.error('Erreur:', err);
+    res.status(500).send('Erreur serveur - Veuillez contacter l\'administrateur');
+});
+
+// Route 404
+app.use((req, res) => {
+    res.status(404).send('Page non trouvée');
 });
 
 // Démarrage du serveur
